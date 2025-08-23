@@ -1,15 +1,30 @@
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="author" content="viggo">
-    <title>WebStack</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <link rel="shortcut icon" href="/vendor/web-stack/images/favicon.png">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic">
-    <link rel="stylesheet" href="/vendor/web-stack/css/fonts/linecons/css/linecons.css">
-    <link rel="stylesheet" href="/vendor/web-stack/css/fonts/fontawesome/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Global Trade Hub" />
+    <meta name="keywords" content="Global Trade Hub, 全球贸易中心, 外贸导航, 跨境电商, 贸易资源" />
+    <meta name="description" content="Global Trade Hub - 全球贸易中心，为跨境电商和外贸企业提供一站式资源导航服务" />
+    <link rel="icon" href="/vendor/global-trade-hub/images/favicon.svg">
+    <title>Global Trade Hub - 全球贸易中心</title>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- / FB Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Global Trade Hub - 全球贸易中心">
+    <meta property="og:description" content="Global Trade Hub - 全球贸易中心，为跨境电商和外贸企业提供一站式资源导航服务">
+    <meta property="og:image" content="/vendor/global-trade-hub/images/logo@2x.svg">
+    <meta property="og:site_name" content="Global Trade Hub">
+    <!-- / Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Global Trade Hub - 全球贸易中心">
+    <meta name="twitter:description" content="Global Trade Hub - 全球贸易中心，为跨境电商和外贸企业提供一站式资源导航服务">
+    <meta name="twitter:image" content="/vendor/global-trade-hub/images/logo@2x.svg">
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="/vendor/web-stack/css/bootstrap.css">
     <link rel="stylesheet" href="/vendor/web-stack/css/xenon-core.css">
     <link rel="stylesheet" href="/vendor/web-stack/css/xenon-components.css">
@@ -23,14 +38,14 @@
     <![endif]-->
     <!-- / FB Open Graph -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="http://www.webstack.cc/">
-    <meta property="og:title" content="WebStack - 收集国内外优秀设计网站、UI设计资源网站、灵感创意网站、素材资源网站，定时更新分享优质产品设计书签。www.webstack.cc">
-    <meta property="og:description" content="UI设计,UI设计素材,设计导航,网址导航,设计资源,创意导航,创意网站导航,设计师网址大全,设计素材大全,设计师导航,UI设计资源,优秀UI设计欣赏,设计师导航,设计师网址大全,设计师网址导航,产品经理网址导航,交互设计师网址导航,www.webstack.cc">
-    <meta property="og:image" content="http://webstack.cc/assets/images/webstack_banner_cn.png">
-    <meta property="og:site_name" content="WebStack - 收集国内外优秀设计网站、UI设计资源网站、灵感创意网站、素材资源网站，定时更新分享优质产品设计书签。www.webstack.cc">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Global Trade Hub - 全球贸易中心">
+    <meta property="og:description" content="Global Trade Hub - 全球贸易中心，为跨境电商和外贸企业提供一站式资源导航服务">
+    <meta property="og:image" content="/vendor/global-trade-hub/images/logo@2x.svg">
+    <meta property="og:site_name" content="Global Trade Hub">
     <!-- / Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="WebStack - 收集国内外优秀设计网站、UI设计资源网站、灵感创意网站、素材资源网站，定时更新分享优质产品设计书签。www.webstack.cc">
-    <meta name="twitter:description" content="UI设计,UI设计素材,设计导航,网址导航,设计资源,创意导航,创意网站导航,设计师网址大全,设计素材大全,设计师导航,UI设计资源,优秀UI设计欣赏,设计师导航,设计师网址大全,设计师网址导航,产品经理网址导航,交互设计师网址导航,www.webstack.cc">
-    <meta name="twitter:image" content="http://www.webstack.cc/assets/images/webstack_banner_cn.png">
+    <meta name="twitter:title" content="Global Trade Hub - 全球贸易中心">
+    <meta name="twitter:description" content="Global Trade Hub - 全球贸易中心，为跨境电商和外贸企业提供一站式资源导航服务">
+    <meta name="twitter:image" content="/vendor/global-trade-hub/images/logo@2x.svg">
 </head>

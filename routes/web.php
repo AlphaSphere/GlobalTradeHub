@@ -11,5 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'HomeController@index');
 Route::get('/about', 'HomeController@about');
+Route::get('/site/{id}', 'HomeController@siteDetail')->name('site.detail');

@@ -244,7 +244,7 @@
 
 
 		// Loading Text toggle
-		$('[data-loading-text]').each(function(i, el) // Temporary for demo purpose only
+		$('[data-loading-text]').each(function(i, el)
 		{
 			var $this = $(el);
 

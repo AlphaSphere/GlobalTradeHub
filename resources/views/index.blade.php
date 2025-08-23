@@ -20,8 +20,16 @@
                         </a>
                     </li>
                 </ul>
-                <a href="https://github.com/hui-ho/WebStack-Laravel" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
             </nav>
+            
+            <!-- 显示错误消息 -->
+            @if(session('error'))
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>错误：</strong> {{ session('error') }}
+            </div>
+            @endif
 
             @include('layouts.content')
             
@@ -34,14 +42,16 @@
                 <div class="footer-inner">
                     <!-- Add your copyright text here -->
                     <div class="footer-text">
-                        &copy; 2019
-                        <a href="/"><strong>WebStack</strong></a> design by <a href="https://github.com/hui-ho" target="_blank"><strong>hui-ho</strong></a>
-                        <!--  - Purchase for only <strong>23$</strong> -->
+                        Global Trade Hub &copy; 2025
+                        <a href="mailto:jaden.ecc@gmail.com"><strong>jaden.ecc@gmail.com</strong></a> | 
+                        <span><strong>微信号：GoodHabit_Lemon</strong></span> | 
+                        <span><strong>WhatsApp：+86 18666877674</strong></span> | 
+                        <span><strong>中国·东莞</strong></span>
                     </div>
                     <!-- Go to Top Link, just add rel="go-top" to any link to add this functionality -->
                     <div class="go-up">
                         <a href="#" rel="go-top">
-                            <i class="fa-angle-up"></i>
+                            <i class="fa fa-angle-up"></i>
                         </a>
                     </div>
                 </div>

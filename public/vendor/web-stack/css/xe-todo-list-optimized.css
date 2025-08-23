@@ -1,0 +1,191 @@
+/* 优化后的Todo List组件样式 */
+
+/* 基础样式 */
+.xe-widget.xe-todo-list {
+    background: #fff;
+    padding: 25px 30px;
+    margin-bottom: 20px;
+}
+
+.xe-widget.xe-todo-list .xe-header {
+    display: table;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.xe-widget.xe-todo-list .xe-header .xe-icon,
+.xe-widget.xe-todo-list .xe-header .xe-label {
+    display: table-cell;
+    vertical-align: top;
+    padding-bottom: 20px;
+}
+
+.xe-widget.xe-todo-list .xe-header .xe-icon {
+    width: 1%;
+}
+
+.xe-widget.xe-todo-list .xe-header .xe-icon i {
+    display: block;
+    line-height: 1;
+    font-size: 28px;
+}
+
+.xe-widget.xe-todo-list .xe-header .xe-label {
+    padding-left: 15px;
+}
+
+.xe-widget.xe-todo-list .xe-header .xe-label span,
+.xe-widget.xe-todo-list .xe-header .xe-label strong {
+    display: block;
+    line-height: 1.1;
+}
+
+.xe-widget.xe-todo-list .xe-header .xe-label span {
+    font-size: 12px;
+    zoom: 1;
+    -webkit-opacity: .8;
+    -moz-opacity: .8;
+    opacity: .8;
+    -ms-filter: alpha(Opacity=80);
+    filter: alpha(opacity=80);
+}
+
+.xe-widget.xe-todo-list .xe-header .xe-label strong {
+    font-size: 15px;
+}
+
+.xe-widget.xe-todo-list .xe-body {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.xe-widget.xe-todo-list .xe-body label {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.xe-widget.xe-todo-list .xe-body label>span {
+    position: relative;
+    display: inline-block;
+    color: #7d7f7f;
+}
+
+.xe-widget.xe-todo-list .xe-body li {
+    margin: 2px 0;
+}
+
+.xe-widget.xe-todo-list .xe-body li.done label>span {
+    zoom: 1;
+    -webkit-opacity: .5;
+    -moz-opacity: .5;
+    opacity: .5;
+    -ms-filter: alpha(Opacity=50);
+    filter: alpha(opacity=50);
+}
+
+.xe-widget.xe-todo-list .xe-body li.done label>span:after {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 9px;
+    height: 1px;
+    background: #8a8b8b;
+    content: '';
+}
+
+/* 颜色主题通用样式 */
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] {
+    color: #fff;
+}
+
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-header {
+    border-bottom-color: rgba(255, 255, 255, .7);
+}
+
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-body .cbr-replaced .cbr-state {
+    border: 1px solid rgba(255, 255, 255, .7);
+}
+
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-body label>span {
+    color: #fff;
+}
+
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-body li.done label>span {
+    zoom: 1;
+    -webkit-opacity: .8;
+    -moz-opacity: .8;
+    opacity: .8;
+    -ms-filter: alpha(Opacity=80);
+    filter: alpha(opacity=80);
+}
+
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-body li.done label>span:after {
+    background: rgba(255, 255, 255, .7);
+}
+
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-footer .form-control {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .7);
+    color: #fff;
+}
+
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-footer .form-control::placeholder,
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-footer .form-control::-moz-placeholder,
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-footer .form-control:-ms-input-placeholder,
+.xe-widget.xe-todo-list[class*="xe-todo-list-"] .xe-footer .form-control::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, .9);
+    opacity: 1;
+}
+
+/* 各种颜色主题背景 */
+.xe-widget.xe-todo-list.xe-todo-list-primary {
+    background: #2c2e2f;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-success {
+    background: #68b828;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-warning {
+    background: #f7d227;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-danger {
+    background: #e5603b;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-info {
+    background: #40bbea;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-secondary {
+    background: #8dc63f;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-turquoise {
+    background: #00b19d;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-pink {
+    background: #ea4c89;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-red {
+    background: #d5080f;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-blue {
+    background: #0e62c7;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-purple {
+    background: #7c38bc;
+}
+
+.xe-widget.xe-todo-list.xe-todo-list-yellow {
+    background: #ffcc00;
+}

@@ -54,6 +54,31 @@ return [
 
         'middleware' => ['web', 'admin'],
     ],
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Laravel-admin auth setting
+    |--------------------------------------------------------------------------
+    |
+    | Authentication settings for all admin pages
+    |
+    */
+    'auth' => [
+        'controller' => App\Admin\Controllers\AuthController::class,
+        'guard' => 'admin',
+        'guards' => [
+            'admin' => [
+                'driver'   => 'session',
+                'provider' => 'admin',
+            ],
+        ],
+        'providers' => [
+            'admin' => [
+                'driver' => 'eloquent',
+                'model'  => Encore\Admin\Auth\Database\Administrator::class,
+            ],
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -86,6 +111,19 @@ return [
     |
     */
     'https' => env('ADMIN_HTTPS', false),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Laravel-admin auth session setting
+    |--------------------------------------------------------------------------
+    |
+    | Authentication session settings for all admin pages
+    |
+    */
+    'session' => [
+        'domain' => env('SESSION_DOMAIN', null),
+        'secure' => env('SESSION_SECURE_COOKIE', false),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -314,6 +352,13 @@ return [
     'extensions' => [
         'grid-lightbox' => [
             'enable' => true,
+        ],
+        'editor' => [
+            'enable' => true,
+            'config' => [
+                'mode' => 'simple', // 或者 full
+                'height' => 500,
+            ]
         ]
     ],
 ];

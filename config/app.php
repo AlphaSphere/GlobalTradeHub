@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Encore\Admin\Editor\EditorServiceProvider::class,
 
         /*
          * Application Service Providers...

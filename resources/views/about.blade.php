@@ -8,12 +8,12 @@
         <div class="navbar-inner">
             <div class="navbar-brand">
                 <a href="/" class="logo">
-                    <img src="/vendor/web-stack/images/logo_dark@2x.png" width="100%" alt="" class="hidden-xs">
-                    <img src="/vendor/web-stack/images/logo@2x.png" width="100%" alt="" class="visible-xs">
+                    <img src="/vendor/global-trade-hub/images/logo_dark@2x.svg" width="100%" alt="Global Trade Hub" class="hidden-xs">
+                    <img src="/vendor/global-trade-hub/images/logo@2x.svg" width="100%" alt="Global Trade Hub" class="visible-xs">
                 </a>
             </div>
             <div class="navbar-mobile-clear"></div>
-            <a href="https://github.com/hui-ho/WebStack-Laravel" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
         </div>
     </nav>
     <div class="page-container">
@@ -22,49 +22,86 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <!-- 关于项目 -->
-                        <h4 class="text-gray">关于项目</h4>
+                        <!-- 我们是谁？ -->
+                        <h4 class="text-gray">我们是谁？</h4>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <blockquote>
-                                        <p>这是一个开源的网址导航网站项目，您可以拿来制作自己的网址导航，也可以做与导航无关的网站。</p>
-                                        </br>
-                                        <p>网站前台静态页面采用 <a href="http://viggoz.com/" target="_blank">viggoz</a> 的 <a href="https://github.com/WebStackPage/WebStackPage.github.io">WebStack</a> 项目源码。</p>
-                                        <p>如果对本项目有任何建议都可以发起 issue。</p>
+                                        <p>Global Trade Hub成立于2015年，是中国跨境电商一站式外贸资源导航平台。我们专注于收录和推荐全球优质的跨境服务商、工具及资讯，致力于为出海企业提供高效、可信赖的资源对接入口，帮助用户快速解决物流、支付、选品等核心环节的决策难题。</p>
                                     </blockquote>
                                 </div>
                             </div>
-                            <!-- 关于作者 -->
-                            <h4 class="text-gray">关于作者</h4>
+                            
+                            <!-- 核心导航功能 -->
+                            <h4 class="text-gray">核心导航功能</h4>
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('http://www.viggoz.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="http://www.viggoz.com/">
-                                        <div class="xe-comment-entry">
-                                            <a class="xe-user-img">
-                                                <img src="https://avatars1.githubusercontent.com/u/28501148?s=460&v=4" class="img-circle" width="40">
-                                            </a>
-                                            <div class="xe-comment">
-                                                <a href="#" class="xe-user-name overflowClip_1">
-                                                    <strong>Designer. hui-ho.</strong>
-                                                </a>
-                                                <p class="overflowClip_2"> hui-ho@outlook.com</p>
-                                            </div>
-                                        </div>
+                                <div class="col-sm-12">
+                                    <h5><strong>1. 资源库导航</strong></h5>
+                                    <ul>
+                                        <li><strong>3000+严选服务商</strong>：覆盖12大核心类目，包括海外仓（如谷仓海外仓）、物流专线（如云途物流）、选品工具、支付通道等，拒绝无效信息干扰；</li>
+                                        <li><strong>动态更新机制</strong>：每日新增合规服务商，每月淘汰低效资源（淘汰率≥15%）。</li>
+                                    </ul>
+                                    
+                                    <h5><strong>2. 实战工具库</strong></h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>类别</th>
+                                                    <th>代表工具</th>
+                                                    <th>核心价值</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>选品服务</td>
+                                                    <td>Jungle Scout镜像版</td>
+                                                    <td>本土化数据+关税模拟计算</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>物流服务</td>
+                                                    <td>纵腾全球通系统</td>
+                                                    <td>异常件实时预警+清关可视化</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>支付方式</td>
+                                                    <td>PingPong Fraud Radar</td>
+                                                    <td>多平台交易反欺诈监控</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>……</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                    
+                                    <h5><strong>3. 政策合规中心</strong></h5>
+                                    <ul>
+                                        <li>实时同步86国海关新规（如欧盟EPR、美国HTS编码更新）；</li>
+                                        <li>每周发布《跨境合规红绿灯报告》，标注高风险地区及解决方案。</li>
+                                    </ul>
                                 </div>
-                                <div class="col-md-8">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <br />
-                                            <blockquote>
-                                                <p>
-                                                    这是一个公益项目，而且是<a href="https://github.com/hui-ho/WebStack-Laravel"> 开源 </a>的。你也可以拿来制作自己的网址导航。如果你有更好的想法，可以通过邮件与我联系，欢迎与我交流分享。
-                                                </p>
-                                            </blockquote>
-                                        </div>
+                            </div>
+                            
+                            <!-- 商业合作 -->
+                            <h4 class="text-gray">商业合作</h4>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5><strong>▸ 服务商收录申请</strong></h5>
+                                    <ul>
+                                        <li><strong>基础收录</strong>：撰写服务商介绍文章，展示于【最新资源】板块并附外链；</li>
+                                        <li><strong>首页推荐</strong>：撰写深度介绍文案，展示于【首页推荐位】，获得全站流量曝光；</li>
+                                        <li><strong>交付时效</strong>：付款后48小时内完成内容发布及上线。</li>
+                                    </ul>
+                                    <div class="alert alert-warning">
+                                        <strong>⚠️ 注意事项：</strong>不收录套壳、镜像、低质量网站，请勿提交此类产品。
                                     </div>
-                                    <br>
+                                    
+                                    <h5><strong>▸ 广告投放</strong></h5>
+                                    <p>提供首页Banner、类目页冠名等合作方式，详情请联系商务团队。</p>
                                 </div>
                             </div>
                         </div>
@@ -75,12 +112,15 @@
             <footer class="main-footer sticky footer-type-1 fixed">
                 <div class="footer-inner">
                     <div class="footer-text">
-                        &copy; 2019
-                        <a href="../cn/about.html"><strong>WebStack</strong></a> design by <a href="https://github.com/hui-ho" target="_blank"><strong>hui-ho</strong></a>
+                        Global Trade Hub &copy; 2025
+                        <a href="mailto:jaden.ecc@gmail.com"><strong>jaden.ecc@gmail.com</strong></a> | 
+                        <span><strong>微信号：GoodHabit_Lemon</strong></span> | 
+                        <span><strong>WhatsApp：+86 18666877674</strong></span> | 
+                        <span><strong>中国·东莞</strong></span>
                     </div>
                     <div class="go-up">
                         <a href="#" rel="go-top">
-                            <i class="fa-angle-up"></i>
+                            <i class="fa fa-angle-up"></i>
                         </a>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
  * Bootstraper for Admin.
  *
  * Here you can remove builtin form field:
- * Encore\Admin\Form::forget(['map', 'editor']);
+ * Encore\Admin\Form::forget(['map']);
  *
  * Or extend custom form field:
  * Encore\Admin\Form::extend('php', PHPEditor::class);
@@ -18,4 +18,7 @@
  *
  */
 
-Encore\Admin\Form::forget(['map', 'editor']);
+Encore\Admin\Form::forget(['map']);
+
+// 注册富文本编辑器扩展
+Encore\Admin\Form::extend('editor', Encore\Admin\Form\Field\Editor::class);

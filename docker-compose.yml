@@ -1,0 +1,65 @@
+services:
+  # PHP应用服务
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webstack_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: webstack
+      DB_USERNAME: root
+      DB_PASSWORD: 46284628
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - webstack-network
+    depends_on:
+      - db
+
+  # Nginx服务
+  nginx:
+    image: nginx:1.21-alpine
+    container_name: webstack_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - webstack-network
+    depends_on:
+      - app
+
+  # MariaDB数据库服务
+  db:
+    image: mariadb:10.5
+    container_name: webstack_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: webstack
+      MYSQL_ROOT_PASSWORD: 46284628
+      MYSQL_ROOT_HOST: "%"
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - "33061:3306"
+    volumes:
+      - webstack-data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - webstack-network
+
+networks:
+  webstack-network:
+    driver: bridge
+
+volumes:
+  webstack-data:
+    driver: local

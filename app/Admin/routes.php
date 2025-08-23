@@ -13,4 +13,7 @@ Route::group([
     $router->get('/', 'HomeController@index');
     $router->resource('categories', CategoryController::class);
     $router->resource('sites', SiteController::class);
+    
+    // 添加CKEditor图片上传路由
+    $router->post('editor/upload', 'EditorController@upload');
 });

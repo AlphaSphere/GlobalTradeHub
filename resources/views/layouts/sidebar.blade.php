@@ -4,10 +4,10 @@
             <!-- logo -->
             <div class="logo">
                 <a href="/" class="logo-expanded">
-                    <img src="/vendor/web-stack/images/logo@2x.png" width="100%" alt="" />
+                    <img src="/vendor/global-trade-hub/images/logo@2x.svg" width="100%" alt="Global Trade Hub" />
                 </a>
                 <a href="/" class="logo-collapsed">
-                    <img src="/vendor/web-stack/images/logo-collapsed@2x.png" width="40" alt="" />
+                    <img src="/vendor/global-trade-hub/images/logo-collapsed@2x.svg" width="40" alt="GTH" />
                 </a>
             </div>
             <div class="mobile-menu-toggle visible-xs">
@@ -15,7 +15,7 @@
                     <i class="linecons-cog"></i>
                 </a>
                 <a href="#" data-toggle="mobile-menu">
-                    <i class="fa-bars"></i>
+                    <i class="fa fa-bars"></i>
                 </a>
             </div>
         </header>

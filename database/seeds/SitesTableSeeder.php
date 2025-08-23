@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SitesTableSeeder extends Seeder
 {
@@ -14,9 +15,9 @@ class SitesTableSeeder extends Seeder
     {
         
 
-        \DB::table('sites')->delete();
+        DB::table('sites')->delete();
         
-        \DB::table('sites')->insert(array (
+        DB::table('sites')->insert(array (
             0 => 
             array (
                 'id' => 1,
@@ -274,17 +275,6 @@ class SitesTableSeeder extends Seeder
             array (
                 'id' => 24,
                 'category_id' => 4,
-                'title' => 'Producthunt',
-                'thumb' => 'images/a1cc88fa0a3bf74349ba9c08a67abdc7.png',
-                'describe' => '发现新鲜有趣的产品。',
-                'url' => 'https://www.producthunt.com/',
-                'created_at' => '2019-01-22 01:33:37',
-                'updated_at' => '2019-01-22 01:33:37',
-            ),
-            24 => 
-            array (
-                'id' => 25,
-                'category_id' => 4,
                 'title' => 'NEXT',
                 'thumb' => 'images/0e2b6c9a5afd4f83d2e22632b08f56ef.png',
                 'describe' => '不错过任何一个新产品。',
@@ -292,9 +282,9 @@ class SitesTableSeeder extends Seeder
                 'created_at' => '2019-01-22 01:34:41',
                 'updated_at' => '2019-01-22 01:34:41',
             ),
-            25 => 
+            24 => 
             array (
-                'id' => 26,
+                'id' => 25,
                 'category_id' => 4,
                 'title' => '少数派',
                 'thumb' => 'images/2d01ac82bb496b607c43e7b2b29cd069.png',
@@ -1289,7 +1279,7 @@ class SitesTableSeeder extends Seeder
                 'title' => 'Lstore',
                 'thumb' => 'images/965f25d08ae3cd33fab21d764a514967.png',
                 'describe' => 'Exclusive mindblowing freebies for designers and developers.',
-                'url' => 'https://free.lstore.graphics/',
+                'url' => 'https://www.lstore.graphics/',
                 'created_at' => '2019-01-22 05:11:00',
                 'updated_at' => '2019-01-22 05:11:00',
             ),

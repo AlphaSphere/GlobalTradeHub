@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <style>
+    .logo-text { font-family: Arial, sans-serif; font-weight: bold; }
+    .main-text { font-size: 16px; fill: #ffffff; }
+  </style>
+  <rect width="40" height="40" rx="5" fill="#2c2e2e"/>
+  <text x="20" y="25" text-anchor="middle" class="logo-text main-text">GTH</text>
+</svg>

@@ -5402,69 +5402,13 @@ button.toast-close-button {
     content: ''
 }
 
+/* 引入优化后的Todo List组件样式 */
+@import url('xe-todo-list-optimized.css');
+
+/* 主题样式已移至xe-todo-list-optimized.css */
 .xe-widget.xe-todo-list.xe-todo-list-primary {
     background: #2c2e2f;
     color: #fff
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-header {
-    border-bottom: 1px solid rgba(255, 255, 255, .7)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-body .cbr-replaced .cbr-state {
-    border: 1px solid rgba(255, 255, 255, .7)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-body label>span {
-    color: #fff
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-body li.done label>span {
-    zoom: 1;
-    -webkit-opacity: .8;
-    -moz-opacity: .8;
-    opacity: .8;
-    -ms-filter: alpha(Opacity=80);
-    filter: alpha(opacity=80)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-body li.done label>span:after {
-    background: rgba(255, 255, 255, .7)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-footer .form-control {
-    background: 0 0;
-    border: 1px solid rgba(255, 255, 255, .7);
-    color: #fff
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-footer .form-control::-moz-placeholder {
-    color: rgba(255, 255, 255, .9);
-    opacity: 1
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-footer .form-control:-ms-input-placeholder {
-    color: rgba(255, 255, 255, .9)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-footer .form-control::-webkit-input-placeholder {
-    color: rgba(255, 255, 255, .9)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-footer .form-control::-webkit-input-placeholder {
-    color: rgba(255, 255, 255, .9)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-footer .form-control:-moz-placeholder {
-    color: rgba(255, 255, 255, .9)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-footer .form-control::-moz-placeholder {
-    color: rgba(255, 255, 255, .9)
-}
-
-.xe-widget.xe-todo-list.xe-todo-list-primary .xe-footer .form-control:-ms-input-placeholder {
-    color: rgba(255, 255, 255, .9)
 }
 
 .xe-widget.xe-todo-list.xe-todo-list-success {

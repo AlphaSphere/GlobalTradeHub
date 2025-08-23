@@ -127,6 +127,7 @@ class SiteController extends Controller
         $form->text('title', '标题')->attribute('autocomplete', 'off');
         $form->image('thumb', '图标')->uniqueName();
         $form->text('describe', '描述')->attribute('autocomplete', 'off');
+        $form->editor('content', '网站介绍')->attribute('autocomplete', 'off');
         $form->url('url', '地址')->attribute('autocomplete', 'off');
 
         $form->footer(function ($footer) {        
