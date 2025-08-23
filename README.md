@@ -1,6 +1,6 @@
-# WebStack-Laravel
+# Global Trade Hub
 
-一个开源的网址导航网站项目，具备完整的前后台，您可以拿来制作自己的网址导航。
+一个专业的全球贸易导航网站项目，具备完整的前后台，您可以拿来制作自己的网址导航。
 
 ![首页](public/screen/01.JPG)
 
@@ -18,8 +18,8 @@
 1. 克隆代码：
 
 ```shell
-git clone https://github.com/hui-ho/WebStack-Laravel.git
-cd WebStack-Laravel
+git clone https://github.com/AlphaSphere/GlobalTradeHub.git
+cd GlobalTradeHub
 ```
 
 2. 启动Docker容器：
@@ -66,7 +66,7 @@ docker-compose exec app chmod -R 775 /var/www/html/storage
 克隆代码：
 
 ```shell
-git clone https://github.com/hui-ho/WebStack-Laravel.git
+git clone https://github.com/AlphaSphere/GlobalTradeHub.git
 ```
 
 安装依赖：
@@ -105,77 +105,17 @@ php artisan serve
 安装完成：http://127.0.0.1:8000
 
 
-## Docker部署
-
-本项目支持使用Docker进行部署，无需在本地安装PHP、MySQL等环境。
-
-### 前提条件
-
-- 安装 [Docker](https://www.docker.com/get-started)
-- 安装 [Docker Compose](https://docs.docker.com/compose/install/)
-
-### 部署步骤
-
-1. 克隆代码：
-
-```shell
-git clone https://github.com/hui-ho/WebStack-Laravel.git
-cd WebStack-Laravel
-```
-
-2. 构建并启动容器：
-
-```shell
-docker-compose up -d
-```
-
-3. 等待容器启动完成（约1-2分钟），然后访问：
-
-```
-http://localhost:8000
-```
-
-后台地址：http://localhost:8000/admin
-
-### 常见问题
-
-1. 如果遇到网络问题无法拉取Docker镜像，可以尝试使用国内Docker镜像源。
-
-2. 如果需要修改端口，请编辑`docker-compose.yml`文件中的`ports`部分。
-
-3. 数据库信息：
-   - 数据库名：webstack
-   - 用户名：webstack
-   - 密码：webstack
-   - 主机：db
-
-4. 如果需要进入容器内部执行命令：
-
-```shell
-docker-compose exec app bash
-```
-
-
 ## 使用
 
 后台地址：http://domain/admin
 
 默认用户：admin
 
-默认密码：admin
+默认密码：admin462813
 
 ![分类](public/screen/02.JPG)
 
 ![网站](public/screen/03.JPG)
-
-
-
-## 感谢
-
-前端设计：[**WebStackPage**](https://github.com/WebStackPage/WebStackPage.github.io)
-
-后台框架：[**laravel-admin**](https://github.com/z-song/laravel-admin)
-
 
 
 ## License
@@ -188,7 +128,7 @@ MIT
 ### 2024-10-22: Docker环境配置
 
 #### 会话主要目的
-- 将WebStack-Laravel项目配置为可在Docker环境中运行
+- 将Global Trade Hub项目配置为可在Docker环境中运行
 - 简化部署流程，提高开发和部署效率
 
 #### 完成的主要任务
@@ -228,14 +168,14 @@ MIT
 #### 会话主要目的
 - 解决Docker环境中的数据库连接问题
 - 优化容器配置，提高应用稳定性
-- 确保WebStack-Laravel在Docker环境中正常运行
+- 确保Global Trade Hub在Docker环境中正常运行
 
 #### 完成的主要任务
 - 修复了数据库连接问题，确保应用能正确连接到MariaDB容器
 - 优化了docker-compose.yml配置，解决了容器依赖关系
 - 改进了docker-start.sh脚本，增加了容器状态检查和错误处理
 - 解决了ARM64架构下的容器兼容性问题
-- 成功部署并验证了WebStack-Laravel的运行状态
+- 成功部署并验证了Global Trade Hub的运行状态
 
 #### 关键决策和解决方案
 - 将MySQL数据库替换为MariaDB，解决了ARM64架构兼容性问题
@@ -395,3 +335,49 @@ MIT
 3. `/public/vendor/global-trade-hub/images/logo_dark@2x.svg`（更新文字颜色）
 4. `/public/vendor/global-trade-hub/images/favicon.svg`（更新背景色）
 5. `/README.md`（添加更新记录）
+
+### 2024-06-02: 代码推送到GitHub仓库
+
+#### 会话目的
+将Global Trade Hub项目代码推送到GitHub仓库，便于版本控制和团队协作。
+
+#### 完成的任务
+1. 更改了远程仓库地址为https://github.com/AlphaSphere/GlobalTradeHub.git
+2. 提交了所有代码更改，包括Logo颜色更新和功能优化
+3. 成功推送代码到GitHub仓库
+
+#### 关键决策
+1. 使用.gitignore文件排除了临时生成的文件，如node_modules、vendor和.env等
+2. 提交了完整的项目代码，包括最近的Logo背景色更新
+
+#### 使用的技术栈
+- Git版本控制
+- GitHub代码托管
+
+#### 修改的文件
+- 全部项目文件已推送至GitHub仓库
+- README.md（添加代码推送记录）
+
+### 2024-06-03: README.md更新与代码重新推送
+
+#### 会话目的
+更新README.md文件内容，统一项目名称为Global Trade Hub，并重新推送代码到GitHub仓库。
+
+#### 完成的任务
+1. 将README.md中的项目名称从WebStack-Laravel更新为Global Trade Hub
+2. 更新了项目描述，强调全球贸易导航的专业性
+3. 更新了GitHub仓库地址为https://github.com/AlphaSphere/GlobalTradeHub.git
+4. 更新了后台默认密码信息
+5. 重新推送代码到GitHub仓库
+
+#### 关键决策
+1. 保留了原有的部署说明和使用指南，确保用户可以顺利部署和使用项目
+2. 统一了项目名称，确保品牌一致性
+3. 更新了后台默认密码信息，提高安全性
+
+#### 使用的技术栈
+- Markdown文档
+- Git版本控制
+
+#### 修改的文件
+- README.md（更新项目名称和相关信息）
