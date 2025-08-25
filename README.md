@@ -118,6 +118,69 @@ php artisan serve
 ![网站](public/screen/03.JPG)
 
 
+## 发布脚本使用说明
+
+本项目提供了三种不同的发布脚本，满足不同的部署需求：
+
+### 1. 基础Docker发布脚本
+
+适用于简单的Docker环境部署：
+
+```shell
+./deploy.sh
+```
+
+此脚本会执行以下操作：
+- 拉取最新代码
+- 构建并启动Docker容器
+- 运行数据库迁移和填充
+- 优化应用程序
+
+### 2. 传统部署脚本
+
+适用于非Docker环境的传统部署方式：
+
+```shell
+./deploy-traditional.sh
+```
+
+此脚本会执行以下操作：
+- 拉取最新代码
+- 安装/更新依赖
+- 配置环境
+- 运行数据库迁移和填充
+- 优化应用程序
+
+### 3. 高级发布脚本
+
+支持多环境部署和版本回滚功能：
+
+```shell
+# 部署到生产环境
+./deploy-advanced.sh -e production
+
+# 部署到测试环境
+./deploy-advanced.sh -e testing
+
+# 部署到开发环境
+./deploy-advanced.sh -e development
+
+# 执行回滚操作
+./deploy-advanced.sh -r
+
+# 回滚到指定版本
+./deploy-advanced.sh -r -v v20240101123456
+
+# 查看帮助信息
+./deploy-advanced.sh -h
+```
+
+高级脚本的特点：
+- 支持多环境部署（开发、测试、生产）
+- 自动创建版本备份，便于回滚
+- 提供回滚功能，可回滚到指定版本
+- 详细的部署日志和错误处理
+
 ## License
 
 MIT
@@ -196,6 +259,37 @@ MIT
 - 更新 `/docker-start.sh`：增加容器状态检查和错误处理
 - 更新 `/.env.docker`：确保数据库连接参数一致
 - 更新 `/README.md`：添加最新部署记录
+
+### 2024-10-25: 发布脚本开发
+
+#### 会话主要目的
+- 开发一键发布脚本，简化项目部署流程
+- 支持多种部署环境和场景
+- 提高部署效率和可靠性
+
+#### 完成的主要任务
+- 创建了基础Docker发布脚本deploy.sh
+- 创建了传统部署脚本deploy-traditional.sh
+- 创建了高级发布脚本deploy-advanced.sh，支持多环境部署和版本回滚
+- 更新了项目文档，添加了发布脚本使用说明
+
+#### 关键决策和解决方案
+- 基础脚本：针对Docker环境，提供简单直接的部署流程
+- 传统脚本：针对非Docker环境，适用于传统服务器部署
+- 高级脚本：添加了版本控制和回滚功能，适用于生产环境
+- 所有脚本都添加了详细的日志输出和错误处理
+- 使用彩色输出提高脚本可读性
+
+#### 使用的技术栈
+- Bash脚本
+- Docker & Docker Compose
+- Git版本控制
+
+#### 修改的文件
+- 新增 `/deploy.sh`
+- 新增 `/deploy-traditional.sh`
+- 新增 `/deploy-advanced.sh`
+- 更新 `/README.md`
 
 ### 2024年代码优化记录
 
