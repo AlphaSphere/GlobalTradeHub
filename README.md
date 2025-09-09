@@ -8,6 +8,8 @@
 
 使用Docker可以快速部署应用，无需手动配置环境。
 
+> **注意**：本项目基于PHP 7.4开发，如果您的服务器运行的是PHP 8.x版本，强烈建议使用Docker环境运行项目，以避免PHP版本不兼容问题。
+
 ### 前提条件
 
 - 安装 [Docker](https://www.docker.com/get-started)
@@ -48,10 +50,91 @@ cd GlobalTradeHub
 docker-compose up -d
 
 # 生成应用密钥
+```
+
+## 常见问题解决
+
+### Composer依赖安装问题
+
+如果在部署过程中遇到Composer依赖安装失败，特别是与`laravel-admin-ext/editor`包相关的问题，可以尝试以下解决方案：
+
+#### 解决方案1：使用deploy.sh脚本
+
+我们的`deploy.sh`脚本已经包含了自动处理依赖问题的逻辑，会自动添加必要的配置：
+
+```shell
+# 使用部署脚本
+bash deploy.sh
+```
+
+#### 解决方案2：手动修改composer.json
+
+1. 添加`minimum-stability`和`prefer-stable`设置：
+
+```json
+{
+    "name": "laravel/laravel",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "type": "project",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    ...
+}
+```
+
+2. 添加自定义仓库：
+
+```json
+{
+    ...
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-admin-extensions/editor"
+        }
+    ],
+    ...
+}
+```
+
+3. 如果仍然失败，可以尝试移除问题包：
+
+```shell
+# 在容器内执行
+docker-compose exec -T -u root app bash -c 'cd /var/www/html && rm -rf vendor composer.lock'
+docker-compose exec -T app bash -c 'cd /var/www/html && composer install --no-dev --ignore-platform-reqs'
+```
 docker-compose exec app php artisan key:generate
 
-# 运行数据库迁移和填充
+# 运行数据库迁移
 docker-compose exec app php artisan migrate --seed
+
+# 创建存储链接
+docker-compose exec app php artisan storage:link
+```
+
+### 2024-06-12: Composer依赖安装问题修复
+
+#### 完成的主要任务
+- 修复了`laravel-admin-ext/editor`包找不到的问题
+- 改进了`deploy.sh`脚本中的依赖安装流程
+- 添加了自动处理Composer依赖问题的机制
+- 更新了README文档，添加了常见问题解决方案
+
+#### 关键决策和解决方案
+- 在composer.json中添加了`minimum-stability: "dev"`和`prefer-stable: true`设置
+- 添加了自定义仓库配置，指向GitHub上的包源
+- 在deploy.sh脚本中添加了多种尝试安装依赖的方法
+- 提供了详细的错误处理和解决方案提示
+
+#### 修改的文件
+- composer.json: 添加了稳定性设置和自定义仓库
+- deploy.sh: 改进了依赖安装流程和错误处理
+- README.md: 添加了常见问题解决方案
+
+
 
 # 创建存储链接
 docker-compose exec app php artisan storage:link

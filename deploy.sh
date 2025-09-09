@@ -39,6 +39,13 @@ check_command git
 check_command docker
 check_command docker-compose
 
+# 获取服务器公网地址
+read -p "请输入服务器公网IP或域名 (不含http://和端口): " SERVER_HOST
+if [ -z "$SERVER_HOST" ]; then
+  warn "未提供服务器地址，将使用默认值 'localhost'"
+  SERVER_HOST="localhost"
+fi
+
 # 确认部署
 echo "=================================================="
 echo "           全球贸易导航网站发布脚本             "
@@ -62,8 +69,7 @@ info "正在拉取最新代码..."
 if [ -d ".git" ]; then
   git pull
   if [ $? -ne 0 ]; then
-    error "拉取代码失败，请检查Git配置"
-    exit 1
+    warn "拉取代码失败，可能是权限问题，继续执行部署流程"
   fi
 else
   warn "当前目录不是Git仓库，跳过代码拉取"
@@ -77,6 +83,10 @@ if [ ! -f ".env" ]; then
 else
   warn "环境配置文件已存在，跳过复制"
 fi
+
+# 更新环境配置中的APP_URL
+sed -i "" "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
+info "已更新环境配置中的APP_URL为 http://${SERVER_HOST}:8000"
 
 # 停止并移除现有容器
 info "正在停止现有容器..."
@@ -127,12 +137,123 @@ if ! docker ps | grep webstack_db > /dev/null; then
   exit 1
 fi
 
-# 安装依赖
+# 修复Git仓库权限问题
+info "正在配置Git仓库权限..."
+docker-compose exec -T app bash -c "git config --global --add safe.directory /var/www/html"
+
+# 安装依赖（修改这里，确保依赖正确安装）
 info "正在安装依赖..."
-docker-compose exec app composer install --no-dev --optimize-autoloader
+
+# 确保 storage 和 bootstrap/cache 目录存在且可写
+info "正在创建和设置 storage, bootstrap/cache 目录权限..."
+docker-compose exec -T app bash -c "mkdir -p /var/www/html/storage/framework/{sessions,views,cache} && mkdir -p /var/www/html/bootstrap/cache"
+docker-compose exec -T app bash -c "chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache"
+
+
+# 尝试多种方式安装依赖
+MAX_INSTALL_RETRIES=3
+INSTALL_RETRIES=0
+DEPENDENCIES_INSTALLED=false
+
+while [ $INSTALL_RETRIES -lt $MAX_INSTALL_RETRIES ] && [ "$DEPENDENCIES_INSTALLED" = false ]
+do
+  info "尝试安装依赖... (尝试 $((INSTALL_RETRIES+1))/$MAX_INSTALL_RETRIES)"
+
+  # 清理旧的依赖和锁文件
+  info "清理旧的依赖文件..."
+  docker-compose exec -T -u root app bash -c "cd /var/www/html && rm -rf vendor composer.lock"
+
+  # 确保composer缓存目录存在且可写
+  info "配置Composer缓存目录..."
+  docker-compose exec -T app bash -c "mkdir -p /var/www/.composer/cache/vcs && chown -R www-data:www-data /var/www/.composer"
+
+
+  # 动态修改 composer.json
+  info "正在动态配置 composer.json..."
+  # 备份 composer.json
+  cp composer.json composer.json.bak
+
+  # 使用更可靠的 python 脚本来修改 json
+  cat > composer_modifier.py << EOF
+import json
+
+with open('composer.json', 'r+') as f:
+    data = json.load(f)
+    
+    # 设置 minimum-stability 和 prefer-stable
+    data['minimum-stability'] = 'dev'
+    data['prefer-stable'] = True
+    
+    # 添加或更新 repositories
+    repo_url = "https://github.com/laravel-admin-extensions/editor"
+    if 'repositories' not in data:
+        data['repositories'] = []
+        
+    repo_exists = False
+    for repo in data['repositories']:
+        if repo.get('url') == repo_url:
+            repo_exists = True
+            break
+            
+    if not repo_exists:
+        data['repositories'].append({
+            "type": "vcs",
+            "url": repo_url
+        })
+        
+    f.seek(0)
+    json.dump(data, f, indent=4)
+    f.truncate()
+
+print("composer.json 已成功更新。")
+EOF
+
+  python3 composer_modifier.py
+  rm composer_modifier.py
+
+  # 复制修改后的 composer.json 到容器
+  info "复制更新后的 composer.json 到容器..."
+  docker cp composer.json webstack_app:/var/www/html/
+
+  # 根据尝试次数选择不同策略
+  COMMAND="composer install --no-dev --optimize-autoloader"
+  if [ $INSTALL_RETRIES -eq 1 ]; then
+      warn "第一次尝试失败，添加 --ignore-platform-reqs 参数重试..."
+      COMMAND="composer install --no-dev --ignore-platform-reqs"
+  elif [ $INSTALL_RETRIES -eq 2 ]; then
+      warn "第二次尝试失败，尝试更新依赖而不是安装..."
+      COMMAND="composer update --no-dev --ignore-platform-reqs"
+  fi
+
+  # 执行安装命令
+  info "执行命令: $COMMAND"
+  docker-compose exec -T app bash -c "cd /var/www/html && $COMMAND"
+
+  # 检查vendor目录是否存在
+  if docker-compose exec app test -d /var/www/html/vendor; then
+    info "依赖安装成功！"
+    DEPENDENCIES_INSTALLED=true
+  else
+    warn "依赖安装失败，准备下一次重试..."
+  fi
+
+  # 恢复 composer.json
+  mv composer.json.bak composer.json
+  
+  INSTALL_RETRIES=$((INSTALL_RETRIES+1))
+done
+
+# 最终检查vendor目录
+if [ "$DEPENDENCIES_INSTALLED" = false ]; then
+  error "所有依赖安装尝试均失败，请检查以下几点："
+  echo "1. 检查网络连接是否可以访问 a composer repository (e.g. packagist.org) 和 GitHub."
+  echo "2. 查看上方具体的错误日志，分析失败原因。"
+  echo "3. 尝试手动进入容器执行安装命令进行调试: docker-compose exec app bash"
+  exit 1
+fi
 
 # 生成应用密钥（如果需要）
-if ! grep -q "APP_KEY=" .env || grep -q "APP_KEY=$" .env; then
+if ! grep -q "APP_KEY=" .env || grep -q "APP_KEY=.$" .env; then
   info "正在生成应用密钥..."
   docker-compose exec app php artisan key:generate
 fi
@@ -162,19 +283,15 @@ docker-compose exec app php artisan storage:link
 info "正在优化应用程序..."
 docker-compose exec app php artisan optimize
 
-# 设置权限
-info "正在设置权限..."
-docker-compose exec app chown -R www-data:www-data /var/www/html/storage
-docker-compose exec app chmod -R 775 /var/www/html/storage
-
 # 部署完成
 info "全球贸易导航网站已成功部署！"
 echo "=================================================="
-echo "网站地址：http://localhost:8000"
-echo "后台地址：http://localhost:8000/admin"
+echo "网站地址：http://${SERVER_HOST}:8000"
+echo "后台地址：http://${SERVER_HOST}:8000/admin"
 echo "默认用户：admin"
 echo "默认密码：admin"
 echo "=================================================="
+echo "请及时修改默认密码以确保安全"
 
 # 询问是否需要查看日志
 read -p "是否需要查看应用日志? (y/n): " log_confirm

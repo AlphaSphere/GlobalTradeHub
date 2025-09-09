@@ -15,7 +15,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: 46284628
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:delegated
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - webstack-network
@@ -30,7 +30,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:delegated
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
     networks:
       - webstack-network
