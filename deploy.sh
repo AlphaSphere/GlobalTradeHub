@@ -152,21 +152,20 @@ docker-compose exec -T app bash -c "chmod -R 777 /var/www/html/storage /var/www/
 
 # 尝试多种方式安装依赖
 MAX_INSTALL_RETRIES=3
-INSTALL_RETRIES=0
+INSTALL_RETRIES=1
 DEPENDENCIES_INSTALLED=false
 
-while [ $INSTALL_RETRIES -lt $MAX_INSTALL_RETRIES ] && [ "$DEPENDENCIES_INSTALLED" = false ]
+while [ $INSTALL_RETRIES -le $MAX_INSTALL_RETRIES ] && [ "$DEPENDENCIES_INSTALLED" = false ]
 do
-  info "尝试安装依赖... (尝试 $((INSTALL_RETRIES+1))/$MAX_INSTALL_RETRIES)"
+  info "尝试安装依赖... (尝试 ${INSTALL_RETRIES}/${MAX_INSTALL_RETRIES})"
 
   # 清理旧的依赖和锁文件
   info "清理旧的依赖文件..."
   docker-compose exec -T -u root app bash -c "cd /var/www/html && rm -rf vendor composer.lock"
 
   # 确保composer缓存目录存在且可写
-  info "配置Composer缓存目录..."
-  docker-compose exec -T app bash -c "mkdir -p /var/www/.composer/cache/vcs && chown -R www-data:www-data /var/www/.composer"
-
+  info "以root用户配置Composer缓存目录和Git安全目录..."
+  docker-compose exec -T -u root app bash -c "mkdir -p /var/www/.composer/cache && chown -R www-data:www-data /var/www && git config --global --add safe.directory /var/www/html"
 
   # 动态修改 composer.json
   info "正在动态配置 composer.json..."
@@ -216,23 +215,34 @@ EOF
   docker cp composer.json webstack_app:/var/www/html/
 
   # 根据尝试次数选择不同策略
-  COMMAND="composer install --no-dev --optimize-autoloader"
-  if [ $INSTALL_RETRIES -eq 1 ]; then
-      warn "第一次尝试失败，添加 --ignore-platform-reqs 参数重试..."
-      COMMAND="composer install --no-dev --ignore-platform-reqs"
-  elif [ $INSTALL_RETRIES -eq 2 ]; then
-      warn "第二次尝试失败，尝试更新依赖而不是安装..."
-      COMMAND="composer update --no-dev --ignore-platform-reqs"
-  fi
+  COMMAND=""
+  case $INSTALL_RETRIES in
+      1)
+          # 第一次：正常安装
+          COMMAND="composer install --no-dev --optimize-autoloader"
+          ;;
+      2)
+          # 第二次：尝试更新，这可以解决一些锁文件问题
+          warn "第二次尝试失败，尝试更新依赖而不是安装..."
+          COMMAND="composer update --no-dev --ignore-platform-reqs"
+          ;;
+      3)
+          # 第三次：终极大法，使用--no-scripts来避免脚本执行问题
+          warn "第三次尝试失败，使用 --no-scripts 选项..."
+          COMMAND="composer install --no-dev --no-scripts"
+          ;;
+  esac
 
   # 执行安装命令
-  info "执行命令: $COMMAND"
-  docker-compose exec -T app bash -c "cd /var/www/html && $COMMAND"
-
-  # 检查vendor目录是否存在
-  if docker-compose exec app test -d /var/www/html/vendor; then
-    info "依赖安装成功！"
-    DEPENDENCIES_INSTALLED=true
+  info "执行命令: ${COMMAND}"
+  if docker-compose exec -T app bash -c "cd /var/www/html && ${COMMAND}"; then
+      # 检查vendor目录是否存在
+      if docker-compose exec -T app test -d /var/www/html/vendor; then
+        info "依赖安装成功！"
+        DEPENDENCIES_INSTALLED=true
+      else
+        warn "命令执行成功但vendor目录未创建，标记为失败。"
+      fi
   else
     warn "依赖安装失败，准备下一次重试..."
   fi
