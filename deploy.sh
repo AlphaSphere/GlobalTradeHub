@@ -67,6 +67,10 @@ fi
 # 拉取最新代码
 info "正在拉取最新代码..."
 if [ -d ".git" ]; then
+  # 确保有足够权限
+  if [ "$(whoami)" != "root" ]; then
+    sudo chown -R $(whoami) .
+  fi
   git pull
   if [ $? -ne 0 ]; then
     warn "拉取代码失败，可能是权限问题，继续执行部署流程"
@@ -85,7 +89,14 @@ else
 fi
 
 # 更新环境配置中的APP_URL
-sed -i "" "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
+# 检测操作系统类型并使用对应的sed命令语法
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS系统
+  sed -i "" "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
+else
+  # Linux系统
+  sed -i "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
+fi
 info "已更新环境配置中的APP_URL为 http://${SERVER_HOST}:8000"
 
 # 停止并移除现有容器
