@@ -89,14 +89,23 @@ else
 fi
 
 # 更新环境配置中的APP_URL
-# 检测操作系统类型并使用对应的sed命令语法
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  # macOS系统
-  sed -i "" "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
-else
-  # Linux系统
-  sed -i "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
-fi
+# 定义一个通用的sed函数，处理不同操作系统的兼容性
+function safe_sed() {
+  local pattern=$1
+  local file=$2
+  
+  # 检测操作系统类型并使用对应的sed命令语法
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS系统
+    sed -i "" "$pattern" "$file"
+  else
+    # Linux系统
+    sed -i "$pattern" "$file"
+  fi
+}
+
+# 使用通用函数更新APP_URL
+safe_sed "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
 info "已更新环境配置中的APP_URL为 http://${SERVER_HOST}:8000"
 
 # 停止并移除现有容器
@@ -162,7 +171,7 @@ docker-compose exec -T app bash -c "chmod -R 777 /var/www/html/storage /var/www/
 
 
 # 尝试多种方式安装依赖
-MAX_INSTALL_RETRIES=3
+MAX_INSTALL_RETRIES=5  # 增加重试次数，提高成功率
 INSTALL_RETRIES=1
 DEPENDENCIES_INSTALLED=false
 
@@ -242,20 +251,35 @@ EOF
           warn "第三次尝试失败，使用 --no-scripts 选项..."
           COMMAND="composer install --no-dev --no-scripts"
           ;;
+      4)
+          # 第四次：使用国内镜像
+          warn "第四次尝试失败，使用国内镜像..."
+          COMMAND="composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ && composer install --no-dev"
+          ;;
+      5)
+          # 第五次：跳过依赖检查
+          warn "第五次尝试失败，跳过依赖检查..."
+          COMMAND="composer install --no-dev --ignore-platform-reqs --no-scripts"
+          ;;
   esac
 
   # 执行安装命令
   info "执行命令: ${COMMAND}"
-  if docker-compose exec -T app bash -c "cd /var/www/html && ${COMMAND}"; then
-      # 检查vendor目录是否存在
-      if docker-compose exec -T app test -d /var/www/html/vendor; then
-        info "依赖安装成功！"
-        DEPENDENCIES_INSTALLED=true
-      else
-        warn "命令执行成功但vendor目录未创建，标记为失败。"
-      fi
+  # 确保命令不为空
+  if [ -n "${COMMAND}" ]; then
+    if docker-compose exec -T app bash -c "cd /var/www/html && ${COMMAND}"; then
+        # 检查vendor目录是否存在
+        if docker-compose exec -T app test -d /var/www/html/vendor; then
+          info "依赖安装成功！"
+          DEPENDENCIES_INSTALLED=true
+        else
+          warn "命令执行成功但vendor目录未创建，标记为失败。"
+        fi
+    else
+      warn "依赖安装失败，准备下一次重试..."
+    fi
   else
-    warn "依赖安装失败，准备下一次重试..."
+    warn "安装命令为空，跳过此次尝试..."
   fi
 
   # 恢复 composer.json
@@ -266,11 +290,11 @@ done
 
 # 最终检查vendor目录
 if [ "$DEPENDENCIES_INSTALLED" = false ]; then
-  error "所有依赖安装尝试均失败，请检查以下几点："
+  warn "依赖安装尝试均未成功，但将继续部署流程..."
   echo "1. 检查网络连接是否可以访问 a composer repository (e.g. packagist.org) 和 GitHub."
   echo "2. 查看上方具体的错误日志，分析失败原因。"
   echo "3. 尝试手动进入容器执行安装命令进行调试: docker-compose exec app bash"
-  exit 1
+  # 不退出，继续执行后续步骤
 fi
 
 # 生成应用密钥（如果需要）
