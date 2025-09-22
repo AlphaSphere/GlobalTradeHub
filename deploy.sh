@@ -70,7 +70,11 @@ if [ -d ".git" ]; then
   # 确保有足够权限
   if [ "$(whoami)" != "root" ]; then
     sudo chown -R $(whoami) .
+    sudo chmod -R 755 .git
   fi
+  # 配置Git安全目录
+  git config --global --add safe.directory "$(pwd)"
+  
   git pull
   if [ $? -ne 0 ]; then
     warn "拉取代码失败，可能是权限问题，继续执行部署流程"
@@ -104,9 +108,19 @@ function safe_sed() {
   fi
 }
 
-# 使用通用函数更新APP_URL
-safe_sed "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
-info "已更新环境配置中的APP_URL为 http://${SERVER_HOST}:8000"
+# 使用通用函数更新APP_URL，确保有足够权限
+if [ -f .env ]; then
+  if [ "$(whoami)" != "root" ]; then
+    # 非root用户使用sudo确保权限
+    sudo bash -c "safe_sed \"s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g\" .env"
+  else
+    # root用户直接执行
+    safe_sed "s|APP_URL=http://localhost:8000|APP_URL=http://${SERVER_HOST}:8000|g" .env
+  fi
+  info "已更新环境配置中的APP_URL为 http://${SERVER_HOST}:8000"
+else
+  warn ".env文件不存在，无法更新APP_URL"
+fi
 
 # 停止并移除现有容器
 info "正在停止现有容器..."
@@ -159,7 +173,7 @@ fi
 
 # 修复Git仓库权限问题
 info "正在配置Git仓库权限..."
-docker-compose exec -T app bash -c "git config --global --add safe.directory /var/www/html"
+docker-compose exec -T -u root app bash -c 'git config --global --add safe.directory /var/www/html && chown -R www-data:www-data /var/www/html/.git'
 
 # 安装依赖（修改这里，确保依赖正确安装）
 info "正在安装依赖..."
